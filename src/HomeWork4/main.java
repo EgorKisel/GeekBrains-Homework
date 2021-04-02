@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class main {
     public static char[][] map;
-    public static final int SIZE = 3;
-    public static final int DOTS_TO_WIN = 3;
+    public static final int SIZE = 5;
+    public static final int DOTS_TO_WIN = 4;
     public static final char DOT_EMPTY = '*';
     public static final char DOT_X = 'X';
     public static final char DOT_O = 'O';
@@ -97,23 +97,22 @@ public class main {
             map[y][x] = DOT_O;
         }
 
-        public static boolean checkWin0 (char symb){
-            if (map[0][0] == symb && map[0][1] == symb && map[0][2] == symb) return true;
-            if (map[1][0] == symb && map[1][1] == symb && map[1][2] == symb) return true;
-            if (map[2][0] == symb && map[2][1] == symb && map[2][2] == symb) return true;
-            if (map[0][0] == symb && map[1][0] == symb && map[2][0] == symb) return true;
-            if (map[0][1] == symb && map[1][1] == symb && map[2][1] == symb) return true;
-            if (map[0][2] == symb && map[1][2] == symb && map[2][2] == symb) return true;
-            if (map[0][0] == symb && map[1][1] == symb && map[2][2] == symb) return true;
-            if (map[2][0] == symb && map[1][1] == symb && map[0][2] == symb) return true;
-            return false;
-
-        }
-
+//        public static boolean checkWin0 (char symb){
+//            if (map[0][0] == symb && map[0][1] == symb && map[0][2] == symb) return true;
+//            if (map[1][0] == symb && map[1][1] == symb && map[1][2] == symb) return true;
+//            if (map[2][0] == symb && map[2][1] == symb && map[2][2] == symb) return true;
+//            if (map[0][0] == symb && map[1][0] == symb && map[2][0] == symb) return true;
+//            if (map[0][1] == symb && map[1][1] == symb && map[2][1] == symb) return true;
+//            if (map[0][2] == symb && map[1][2] == symb && map[2][2] == symb) return true;
+//            if (map[0][0] == symb && map[1][1] == symb && map[2][2] == symb) return true;
+//            return map[2][0] == symb && map[1][1] == symb && map[0][2] == symb;
+//
+//        }
 
 
 
-    private static boolean isMapFull() {
+
+    public static boolean isMapFull() {
         for (char[] chars : map) {
             for (int j = 0; j < map.length; j++) {
                 if (chars[j] == DOT_EMPTY) {
@@ -123,6 +122,41 @@ public class main {
         }
             return true;
             }
+    public static boolean checkWin0(char symb) {
+        int countV; // проверка по вертикали
+        int countH; // проверка по горизонтали
+        int countDiagonalA = 0; // проверка по диагонали \
+        int countDiagonalB = 0; // проверка по диагонали /
+        for (int i = 0; i <= map.length - 1; i++) {
+            countH = 0;
+            countV = 0;
+            for (int j = 0; j <= map.length - 1; j++) {
 
+                if (map[i][j] == symb) {
+                    countH++;
+                    if (countH == DOTS_TO_WIN) return true;
+                }
+
+
+                if (map[j][i] == symb) {
+                    countV++;
+                    if (countV == DOTS_TO_WIN) return true;
+                }
+            }
+
+
+            if (map[i][i] == symb) {
+                countDiagonalA++;
+                if (countDiagonalA == DOTS_TO_WIN) return true;
+            } else countDiagonalA = 0;
+
+
+            if (map[i][map.length - 1 - i] == symb) {
+                countDiagonalB++;
+                if (countDiagonalB == DOTS_TO_WIN) return true;
+            } else countDiagonalB = 0;
+        }
+        return false;
+    }
 
 }
